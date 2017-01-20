@@ -35,7 +35,7 @@ open class Application : SpringBootServletInitializer() {
 
         val jacksonMapper = ObjectMapper().registerKotlinModule()
                 .setSerializationInclusion(JsonInclude.Include.NON_ABSENT)
-                .enable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES)
+                .enable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES)!!
 
         @Throws(Exception::class)
         @JvmStatic fun main(args: Array<String>) {
