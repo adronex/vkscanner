@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
+import com.vk.api.sdk.client.VkApiClient
+import com.vk.api.sdk.httpclient.HttpTransportClient
+import com.vk.api.sdk.client.TransportClient
+
+
 
 /**
  * Created on 17.01.2017;
@@ -43,16 +48,23 @@ class VkApiWhore {
             produces = arrayOf(MediaType.APPLICATION_JSON_UTF8_VALUE))
     fun nameRequest(): WhoreDto? {
 
-        val url = "https://api.vk.com/method/wall.search"
-        val params = listOf(
-                "owner_id" to "-24983798",
-                "query" to "oh, sleeper",
-                "count" to "2",
-                "version" to "5.62")
-        val (request, response, result) = Fuel.get(url, params).responseObject(WhoreDto.Deserializer())
-        val (whore, error) = result
-        println(result)
-        return whore;
+        val transportClient = HttpTransportClient()
+        val vk = VkApiClient(transportClient)
+        val response = vk.wall().search().count(5).ownerId(-24983798).query("oh, sleeper").execute()
+
+        response.items.forEach { println(it.text) }
+
+//        val url = "https://api.vk.com/method/wall.search"
+//        val params = listOf(
+//                "owner_id" to "-24983798",
+//                "query" to "oh, sleeper",
+//                "count" to "2",
+//                "version" to "5.62")
+//        val (request, response, result) = Fuel.get(url, params).responseObject(WhoreDto.Deserializer())
+//        val (lola, bola, dola) = Fuel.get(url, params).responseString()
+//        val (whore, error) = result
+//        println(dola)
+        return WhoreDto();
     }
 
 }

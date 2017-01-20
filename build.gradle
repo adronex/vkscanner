@@ -37,6 +37,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
 
     testCompile 'junit:junit'
+    compile 'com.vk.api:sdk:0.4.1'
 }
 
 task wrapper(type: Wrapper) {
