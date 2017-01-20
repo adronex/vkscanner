@@ -16,14 +16,19 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class VkApiWhoreController {
 
+    data class EntryBitches(
+            var count: Int = 10,
+            var query: String = ""
+    )
+
     @GetMapping(path = arrayOf("/vk"))
-    fun nameRequest(): SearchResponse {
+    fun nameRequest(params: EntryBitches): SearchResponse {
         val transportClient = HttpTransportClient()
         val vk = VkApiClient(transportClient)
         val response = vk.wall().search()
-                .count(5)
+                .count(params.count)
                 .ownerId(-24983798)
-                .query("oh, sleeper")
+                .query(params.query)
                 .execute()
         return response
     }
