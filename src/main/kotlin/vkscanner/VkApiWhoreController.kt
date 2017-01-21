@@ -3,6 +3,7 @@ package vkscanner
 import com.vk.api.sdk.client.VkApiClient
 import com.vk.api.sdk.httpclient.HttpTransportClient
 import com.vk.api.sdk.objects.wall.responses.SearchResponse
+import com.vk.api.sdk.queries.groups.GroupField
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -18,7 +19,9 @@ class VkApiWhoreController {
 
     data class EntryBitches(
             var count: Int = 10,
-            var query: String = ""
+            var offset: Int = 0,
+            var query: String = "",
+            var ownersOnly: Boolean = true
     )
 
     @GetMapping(path = arrayOf("/vk"))
@@ -28,6 +31,7 @@ class VkApiWhoreController {
         val response = vk.wall().search()
                 .count(params.count)
                 .ownerId(-24983798)
+                .ownersOnly(params.ownersOnly)
                 .query(params.query)
                 .execute()
         return response
