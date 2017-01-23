@@ -5,6 +5,9 @@ import com.vk.api.sdk.httpclient.HttpTransportClient
 import com.vk.api.sdk.objects.wall.responses.SearchResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+import vkscanner.filter.Filter
+import vkscanner.filter.FilterRepository
+import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
 
 
 /**
@@ -14,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
  */
 
 @RestController
-class VkApiWhoreController {
+class VkApiWhoreController @Inject constructor(val repository: FilterRepository) {
 
     data class EntryBitches(
             var count: Int = 10,
@@ -34,6 +37,11 @@ class VkApiWhoreController {
                 .query(params.query)
                 .execute()
         return response
+    }
+
+    @GetMapping(path = arrayOf("/db"))
+    fun db(query: String): List<Filter> {
+        return repository.findByQueries(query)
     }
 
 }
