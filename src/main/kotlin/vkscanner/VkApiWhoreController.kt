@@ -3,7 +3,6 @@ package vkscanner
 import com.vk.api.sdk.client.VkApiClient
 import com.vk.api.sdk.httpclient.HttpTransportClient
 import com.vk.api.sdk.objects.wall.responses.SearchResponse
-import com.vk.api.sdk.queries.groups.GroupField
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
