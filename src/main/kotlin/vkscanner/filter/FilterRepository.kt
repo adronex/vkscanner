@@ -9,5 +9,7 @@ import org.springframework.data.mongodb.repository.MongoRepository
  */
 interface FilterRepository : MongoRepository <Filter, String> {
 
+    override fun findAll(): List<Filter>
+
     fun findByQueries(query: String): List<Filter>
 }
