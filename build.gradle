@@ -25,6 +25,12 @@ repositories {
     jcenter()
 }
 
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" // Required for Kotlin integration
 
@@ -39,7 +45,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
 
     testCompile 'junit:junit'
-    compile 'com.vk.api:sdk:0.4.1'
+   // compile 'com.vk.api:sdk:0.4.1'
+    compile 'com.github.adronex:vk-java-sdk:0.4.1'
 }
 
 task wrapper(type: Wrapper) {
