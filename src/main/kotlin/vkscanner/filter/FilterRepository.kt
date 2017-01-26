@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository
  * Created on 23.01.2017.
  * @author Pavel
  */
-interface FilterRepository : MongoRepository <Filter, String> {
+internal interface FilterRepository : MongoRepository <Filter, String> {
 
     override fun findAll(): List<Filter>
 
