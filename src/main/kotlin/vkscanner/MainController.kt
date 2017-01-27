@@ -1,7 +1,9 @@
-package vkscanner.vkexternal
+package vkscanner
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+import vkscanner.vkexternal.OutputDto
+import vkscanner.vkexternal.VkApiService
 import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
 
 
@@ -12,7 +14,7 @@ import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
  */
 
 @RestController
-class VkApiWhoreController @Inject constructor(val service: VkApiService) {
+class MainController @Inject constructor(val service: VkApiService) {
 
     data class EntryBitches(
             var count: Int = 10,
@@ -20,15 +22,6 @@ class VkApiWhoreController @Inject constructor(val service: VkApiService) {
             var query: String = "",
             var ownersOnly: Boolean = true
     )
-
-//    @GetMapping(path = arrayOf("/vk"))
-//    fun nameRequest(params: EntryBitches): SearchResponse {
-//    }
-
-//    @GetMapping(path = arrayOf("/db"))
-//    fun db(query: String): List<Filter> {
-//        return repository.findByQueries(query)
-//    }
 
     @GetMapping(path = arrayOf("/filter"))
     fun filtered(): Set<OutputDto> {

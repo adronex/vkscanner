@@ -4,6 +4,7 @@ import com.vk.api.sdk.client.VkApiClient
 import com.vk.api.sdk.httpclient.HttpTransportClient
 import com.vk.api.sdk.objects.wall.responses.SearchResponse
 import org.springframework.stereotype.Service
+import vkscanner.MainController
 import vkscanner.filter.FilterService
 import java.util.*
 import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
@@ -26,7 +27,7 @@ internal class VkApiServiceImpl @Inject constructor(val filterService: FilterSer
             val paginationSize = MAX_VK_RESPONSE_COUNT
             var totalCount = paginationSize // For first while prok
             while (currentOffset < totalCount) {
-                val singleResponse = getSingleResponse(vkscanner.vkexternal.VkApiWhoreController.EntryBitches(paginationSize, currentOffset, it, true))
+                val singleResponse = getSingleResponse(MainController.EntryBitches(paginationSize, currentOffset, it, true))
                 responses.add(singleResponse)
                 totalCount = singleResponse.count
                 currentOffset += paginationSize
@@ -43,7 +44,7 @@ internal class VkApiServiceImpl @Inject constructor(val filterService: FilterSer
         return finalEntry
     }
 
-    private fun getSingleResponse(params: VkApiWhoreController.EntryBitches): SearchResponse {
+    private fun getSingleResponse(params: MainController.EntryBitches): SearchResponse {
         val transportClient = HttpTransportClient()
         val vk = VkApiClient(transportClient)
         val response = vk.wall().search()
