@@ -1,6 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 .gradle
 /build/
+/classes/
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache

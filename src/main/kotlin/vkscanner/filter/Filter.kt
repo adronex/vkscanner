@@ -1,6 +1,7 @@
 package vkscanner.filter
 
 import org.springframework.data.annotation.Id
+import java.util.*
 
 /**
  * Default class description.
@@ -9,4 +10,6 @@ import org.springframework.data.annotation.Id
  * @since ${VERSION}
  */
 
-data class Filter(@Id val userId: String, val queries: Set<String>, val communities: Set<String>)
+data class Filter(@Id var id: String? = null,
+                  var queries: Set<String> = HashSet<String>(),
+                  var communities: Set<String> = HashSet<String>())

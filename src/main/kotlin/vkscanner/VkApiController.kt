@@ -2,7 +2,6 @@ package vkscanner
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
-import vkscanner.vkexternal.OutputDto
 import vkscanner.vkexternal.VkApiService
 import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
 
@@ -14,7 +13,7 @@ import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
  */
 
 @RestController
-class MainController @Inject constructor(val service: VkApiService) {
+class VkApiController @Inject constructor(val service: VkApiService) {
 
     data class EntryBitches(
             var count: Int = 10,
@@ -23,9 +22,8 @@ class MainController @Inject constructor(val service: VkApiService) {
             var ownersOnly: Boolean = true
     )
 
-    @GetMapping(path = arrayOf("/filter"))
-    fun filtered(): Set<OutputDto> {
-        return service.getAllResponsesByAllFilters()
-    }
+    @GetMapping(value = "/filter")
+    fun getMazafakaBlya() = service.getAllResponsesByAllFilters()
+
 
 }
