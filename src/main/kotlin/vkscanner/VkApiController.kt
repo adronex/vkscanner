@@ -1,6 +1,7 @@
 package vkscanner
 
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import vkscanner.vkexternal.VkApiService
 import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
@@ -13,6 +14,7 @@ import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
  */
 
 @RestController
+@RequestMapping("/posts")
 class VkApiController @Inject constructor(val service: VkApiService) {
 
     data class EntryBitches(
@@ -22,7 +24,7 @@ class VkApiController @Inject constructor(val service: VkApiService) {
             var ownersOnly: Boolean = true
     )
 
-    @GetMapping(value = "/filter")
+    @GetMapping
     fun getMazafakaBlya() = service.getAllResponsesByAllFilters()
 
 

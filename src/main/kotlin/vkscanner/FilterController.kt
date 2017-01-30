@@ -10,7 +10,8 @@ import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
  * Created on 27.01.2017.
  * @author Pavel
  */
-@RestController(value = "/filters")
+@RestController
+@RequestMapping("/filters")
 class FilterController @Inject constructor(val service: FilterService) {
 
     @GetMapping
