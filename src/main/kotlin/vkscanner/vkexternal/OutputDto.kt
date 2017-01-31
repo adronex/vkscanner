@@ -9,6 +9,7 @@ import com.vk.api.sdk.objects.wall.WallpostFull
  */
 class OutputDto(entry: WallpostFull) {
     val postId = entry.id
+    val ownerId = entry.ownerId
     val text = entry.text
     val date = entry.date
     val likes = entry.likes.count
