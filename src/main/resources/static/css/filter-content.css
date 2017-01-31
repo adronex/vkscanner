@@ -1,0 +1,34 @@
+.filter-content {
+    margin: 0 0 0 170px;
+    display: block;
+}
+
+.filter-content p {
+    padding: 2%;
+}
+
+.filter-table {
+    border-collapse: collapse;
+    width: 70%;
+}
+
+.filter-table tr, .filter-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.filter-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.filter-table tr:hover {
+    background-color: #ddd;
+}
+
+.filter-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #c98904;
+    color: white;
+}

@@ -3,22 +3,46 @@
 <head>
     <title>Static</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/nav-bar.css">
+
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/nav-top.css">
+    <link rel="stylesheet" href="css/nav-left.css">
+    <link rel="stylesheet" href="css/filter-content.css">
 </head>
 <body>
-<div class="nav-bar">
-    <ul class="topnav" id="myTopnav">
+<div class="nav-top">
+    <ul>
         <li><a href="#home">Filters</a></li>
         <li><a href="#news">Posts</a></li>
         <li><a href="#contact">Bots</a></li>
     </ul>
 </div>
-<div class="jumbotron">
-    <h1>Home</h1>
-    <p>Some static content</p>
-    <p>
-        <a class="btn btn-lg btn-primary" href="#navbar" role="button">Go &raquo;</a>
-    </p>
+<div class="nav-left">
+    <ul>
+        <li><a href="#home">Music</a></li>
+        <li><a href="#news">Юморески</a></li>
+    </ul>
+</div>
+<div class="filter-content">
+
+    <label>
+        Search:
+        <input type="text"/>
+    </label>
+    <table class="filter-table">
+        <tr>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            <td>Lola</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Bola</td>
+            <td></td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>
