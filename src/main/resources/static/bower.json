@@ -1,0 +1,11 @@
+{
+  "name": "vkscanner",
+  "ignore": [
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "1.6.1",
+    "angular-route": "1.6.1"
+  }
+}
