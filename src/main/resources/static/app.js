@@ -8,9 +8,8 @@
                 url: filtersUrl,
                 views: {
                     'content': {
-                        template: '<h1>asdfasdf</h1>'
-                        // templateUrl: 'components/filter/filter-list.html',
-                        // controller: 'filterListController'
+                        templateUrl: 'components/filter/filter-list.html',
+                        controller: 'filterListController'
                     }
                 }
             });
