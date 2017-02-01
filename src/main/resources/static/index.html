@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Static</title>
+<head data-ng-app="vkscanner">
+    <title>VK Scanner</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+
+    <script src="app.js"></script>
+    <script src="components/filter/filter-list.js"></script>
 
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/nav-top.css">
@@ -15,7 +18,7 @@
 <body>
 <div class="nav-top">
     <ul>
-        <li><a href="#home">Filters</a></li>
+        <li><a href="#filters">Filters</a></li>
         <li><a href="#news">Posts</a></li>
         <li><a href="#contact">Bots</a></li>
     </ul>
@@ -47,5 +50,6 @@
         </tr>
     </table>
 </div>
+<div data-ui-view="content"></div>
 </body>
 </html>
