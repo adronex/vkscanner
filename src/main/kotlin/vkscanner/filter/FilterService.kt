@@ -6,7 +6,8 @@ package vkscanner.filter
  * @author Pavel
  */
 interface FilterService {
-    fun findAll(): List<Filter>
+    fun findAll(): List<IdNameDto>
+    fun findOne(id: String): Filter
     fun save(filter: Filter)
     fun delete(id: String)
 }

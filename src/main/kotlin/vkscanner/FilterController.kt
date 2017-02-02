@@ -15,15 +15,18 @@ import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
 class FilterController @Inject constructor(val service: FilterService) {
 
     @GetMapping
-    fun findAllFilters() = service.findAll()
+    fun findAll() = service.findAll()
+
+    @GetMapping(path = arrayOf("/{id}"))
+    fun findOne(@PathVariable id: String) = service.findOne(id)
 
     @PostMapping
-    fun saveFilter(@RequestBody filter: Filter) {
+    fun save(@RequestBody filter: Filter) {
         service.save(filter)
     }
 
     @DeleteMapping
-    fun deleteFilter(@RequestParam id: String) {
+    fun delete(@RequestParam id: String) {
         service.delete(id)
     }
 }

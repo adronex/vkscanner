@@ -8,48 +8,24 @@
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 
     <script src="app.js"></script>
-    <script src="components/filter/filter-list.js"></script>
+    <script src="components/filter/filter.js"></script>
+    <script src="components/filter/sidebar/filter-sidebar.js"></script>
+    <script src="components/filter/main/filter-main.js"></script>
 
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/nav-top.css">
-    <link rel="stylesheet" href="css/nav-left.css">
-    <link rel="stylesheet" href="css/filter-content.css">
+    <link rel="stylesheet" href="components/filter/sidebar/filter-sidebar.css">
+    <link rel="stylesheet" href="components/filter/main/filter-main.css">
 </head>
 <body>
 <div class="nav-top">
     <ul>
-        <li><a href="#filters">Filters</a></li>
-        <li><a href="#news">Posts</a></li>
-        <li><a href="#contact">Bots</a></li>
+        <li><a data-ui-sref="filters">Filters</a></li>
+        <li><a data-ui-sref="posts">Posts</a></li>
+        <li><a data-ui-sref="bots">Bots</a></li>
     </ul>
 </div>
-<div class="nav-left">
-    <ul>
-        <li><a href="#home">Music</a></li>
-        <li><a href="#news">Юморески</a></li>
-    </ul>
+<div data-ui-view="content">
 </div>
-<div class="filter-content">
-
-    <label>
-        Search:
-        <input type="text"/>
-    </label>
-    <table class="filter-table">
-        <tr>
-            <th>Name</th>
-            <th>Action</th>
-        </tr>
-        <tr>
-            <td>Lola</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Bola</td>
-            <td></td>
-        </tr>
-    </table>
-</div>
-<div data-ui-view="content"></div>
 </body>
 </html>

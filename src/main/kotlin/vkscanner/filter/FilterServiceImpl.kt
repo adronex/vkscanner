@@ -11,7 +11,9 @@ import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
 @Service
 internal class FilterServiceImpl @Inject constructor(val repository: FilterRepository) : FilterService {
 
-    override fun findAll() = repository.findAll()
+    override fun findAll() = repository.findAll().map { IdNameDto(it.id!!, it.name) }
+
+    override fun findOne(id: String) = repository.findOne(id)
 
     override fun save(filter: Filter) {
         repository.save(filter)

@@ -1,31 +1,31 @@
-.filter-content {
+.filter-main {
     margin: 0 0 0 170px;
     display: block;
 }
 
-.filter-content p {
+.filter-main p {
     padding: 2%;
 }
 
-.filter-table {
+.filter-main table {
     border-collapse: collapse;
     width: 70%;
 }
 
-.filter-table tr, .filter-table td {
+.filter-main tr, .filter-main td {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
-.filter-table tr:nth-child(even) {
+.filter-main tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-.filter-table tr:hover {
+.filter-main tr:hover {
     background-color: #ddd;
 }
 
-.filter-table th {
+.filter-main th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;

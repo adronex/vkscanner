@@ -6,9 +6,9 @@
 
     angular
         .module('vkscanner')
-        .controller('filterListController', filterListController);
+        .controller('filterController', filterController);
 
-    function filterListController() {
+    function filterController() {
         console.log('I am here!');
     }
 })();

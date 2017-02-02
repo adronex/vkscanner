@@ -20,28 +20,28 @@ internal class VkApiServiceImpl @Inject constructor(val filterService: FilterSer
     val MAX_VK_RESPONSE_COUNT: Int = 100
 
     override fun getAllResponsesByAllFilters(): Set<OutputDto> {
-        val filters = filterService.findAll()
-        val responses = java.util.ArrayList<com.vk.api.sdk.objects.wall.responses.SearchResponse>()
-        filters.flatMap { it.queries }.forEach {
-            var currentOffset = 0
-            val paginationSize = MAX_VK_RESPONSE_COUNT
-            var totalCount = paginationSize // For first while prok
-            while (currentOffset < totalCount) {
-                val singleResponse = getSingleResponse(VkApiController.EntryBitches(paginationSize, currentOffset, it, true))
-                responses.add(singleResponse)
-                totalCount = singleResponse.count
-                currentOffset += paginationSize
-            }
-        }
-        val okValues = responses.flatMap { it.items }.map(::OutputDto)
-        val finalEntry = LinkedHashSet<OutputDto>()
-        filters.flatMap { it.queries }.forEach {
-            query ->
-            okValues.filter { it.text.toLowerCase().contains(query.toLowerCase()) }.forEach {
-                finalEntry.add(it)
-            }
-        }
-        return finalEntry
+//        val filters = filterService.findAll()
+//        val responses = java.util.ArrayList<com.vk.api.sdk.objects.wall.responses.SearchResponse>()
+//        filters.flatMap { it.queries }.forEach {
+//            var currentOffset = 0
+//            val paginationSize = MAX_VK_RESPONSE_COUNT
+//            var totalCount = paginationSize // For first while prok
+//            while (currentOffset < totalCount) {
+//                val singleResponse = getSingleResponse(VkApiController.EntryBitches(paginationSize, currentOffset, it, true))
+//                responses.add(singleResponse)
+//                totalCount = singleResponse.count
+//                currentOffset += paginationSize
+//            }
+//        }
+//        val okValues = responses.flatMap { it.items }.map(::OutputDto)
+//        val finalEntry = LinkedHashSet<OutputDto>()
+//        filters.flatMap { it.queries }.forEach {
+//            query ->
+//            okValues.filter { it.text.toLowerCase().contains(query.toLowerCase()) }.forEach {
+//                finalEntry.add(it)
+//            }
+//        }
+        return HashSet()// finalEntry
     }
 
     private fun getSingleResponse(params: VkApiController.EntryBitches): SearchResponse {

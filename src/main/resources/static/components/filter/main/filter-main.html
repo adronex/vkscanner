@@ -1,0 +1,19 @@
+<div data-ng-controller="filterController as ctrl" class="filter-main">
+
+    <label>
+        Search:
+        <input type="text"/>
+    </label>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+        <tr data-ng-repeat="query in $ctrl.filter.queries">
+            <td>{{query}}</td>
+            <td>
+                <button data-ng-click="$ctrl.removeFromFilter(query)">Delete</button>
+            </td>
+        </tr>
+    </table>
+</div>
