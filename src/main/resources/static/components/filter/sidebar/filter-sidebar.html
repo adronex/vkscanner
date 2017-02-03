@@ -4,4 +4,10 @@
             <a href="#home">{{filter.name}}</a>
         </li>
     </ul>
+    <label>
+        <input type="text"
+               data-ng-model="$ctrl.tempValue"
+               data-ng-keypress="$ctrl.onEnterPress($event)"/>
+        <button data-ng-click="$ctrl.addFilter()">Add</button>
+    </label>
 </div>

@@ -8,12 +8,39 @@
         let ctrl = this;
 
         ctrl.filters = [];
-        $http.get('/filters').then(
-            function (response) {
-                ctrl.filters = response.data;
+
+        ctrl.load = function () {
+            $http.get('/filters').then(
+                function (response) {
+                    ctrl.filters = response.data;
+                }
+            );
+        };
+
+        ctrl.load();
+
+        ctrl.onEnterPress = function (keyEvent) {
+            if (keyEvent.which === 13) {
+                ctrl.addFilter();
             }
-        );
-        console.log('ololo');
+        };
+
+        ctrl.addFilter = function () {
+            let filter = {
+                name: ctrl.tempValue,
+                queries: [],
+                communities: []
+            };
+            $http.post('/filters', filter).then(
+                function (response) {
+                    alert('Success!');
+                    ctrl.load();
+                },
+                function (error) {
+                    alert('Error!');
+                }
+            );
+        }
     }
 
     angular

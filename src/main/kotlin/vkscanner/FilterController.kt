@@ -25,8 +25,8 @@ class FilterController @Inject constructor(val service: FilterService) {
         service.save(filter)
     }
 
-    @DeleteMapping
-    fun delete(@RequestParam id: String) {
+    @DeleteMapping(path = arrayOf("/{id}"))
+    fun delete(@PathVariable id: String) {
         service.delete(id)
     }
 }

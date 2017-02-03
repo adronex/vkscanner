@@ -2,18 +2,30 @@
 
     <label>
         Search:
-        <input type="text"/>
+        <input type="text"
+               data-ng-model="$ctrl.searchValue"/>
     </label>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Action</th>
-        </tr>
-        <tr data-ng-repeat="query in $ctrl.filter.queries">
-            <td>{{query}}</td>
-            <td>
-                <button data-ng-click="$ctrl.removeFromFilter(query)">Delete</button>
-            </td>
-        </tr>
-    </table>
+    <br/>
+    <label>
+        <input type="text"
+               data-ng-model="$ctrl.tempValue"
+               data-ng-keypress="$ctrl.onEnterPress($event)"/>
+        <button data-ng-click="$ctrl.addToFilter()">Add</button>
+    </label>
+    <div>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+            <tr data-ng-repeat="query in $ctrl.filter.queries | filter:$ctrl.searchValue">
+                <td>{{query}}</td>
+                <td>
+                    <button data-ng-click="$ctrl.removeFromFilter(query)">Delete</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <button data-ng-click="$ctrl.save()">Save</button>
+    <button data-ng-click="$ctrl.delete()">Delete</button>
 </div>
