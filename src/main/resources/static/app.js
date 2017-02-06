@@ -8,8 +8,7 @@
                     url: '/filters',
                     views: {
                         'content': {
-                            templateUrl: 'components/filter/filter.html',
-                            controller: 'filterController'
+                            templateUrl: 'components/filter/filter.html'
                         }
                     }
                 })
