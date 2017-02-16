@@ -4,13 +4,13 @@
 'use strict';
 (function () {
 
-    function filterMainController($http) {
+    function filterMainController($http, $stateParams) {
         let ctrl = this;
 
         ctrl.filter = [];
 
         ctrl.load = function () {
-            $http.get('/filters/5886434af36d2855565452a6').then(
+            $http.get('/filters/' + $stateParams.filterId).then(
                 function (response) {
                     ctrl.filter = response.data;
                 }

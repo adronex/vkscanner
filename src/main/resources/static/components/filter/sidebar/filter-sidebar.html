@@ -1,7 +1,7 @@
 <div class="filter-sidebar">
     <ul>
         <li data-ng-repeat="filter in $ctrl.filters">
-            <a href="#home">{{filter.name}}</a>
+            <a data-ng-click="$ctrl.setId(filter.id)">{{filter.name}}</a>
         </li>
     </ul>
     <label>

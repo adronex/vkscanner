@@ -12,6 +12,14 @@
                         }
                     }
                 })
+                .state('filters.main', {
+                    url: '/:filterId',
+                    views: {
+                        'content': {
+                            templateUrl: 'components/filter/filter.html'
+                        }
+                    }
+                })
                 .state('404', {
                     url: '/404',
                     views: {
