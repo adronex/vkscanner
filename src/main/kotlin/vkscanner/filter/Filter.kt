@@ -13,7 +13,8 @@ import java.util.*
 data class Filter(@Id var id: String? = null,
                   var name: String = "Default",
                   var queries: Set<String> = HashSet<String>(),
-                  var communities: Set<String> = HashSet<String>())
+                  var communities: Set<String> = HashSet<String>(),
+                  var ownersOnly: Boolean = true)
 
 data class IdNameDto(val id: String,
                      val name: String)

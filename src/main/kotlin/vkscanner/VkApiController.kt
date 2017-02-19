@@ -1,31 +1,21 @@
 package vkscanner
 
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import vkscanner.vkexternal.VkApiService
 import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
 
-
 /**
- * Created on 17.01.2017;
- * @author p.sinitskiy (adronex303@gmail.com);
- * @since 1.0.
+ * Default class description.
+ * Created on 19.02.2017.
+ * @author Pavel
  */
-
 @RestController
-@RequestMapping("/posts")
-class VkApiController @Inject constructor(val service: VkApiService) {
+@RequestMapping("/vk")
+private class VkApiController @Inject constructor(val service: VkApiService) {
 
-    data class EntryBitches(
-            var count: Int = 10,
-            var offset: Int = 0,
-            var query: String = "",
-            var ownersOnly: Boolean = true
-    )
-
-    @GetMapping
-    fun getMazafakaBlya() = service.getAllResponsesByAllFilters()
-
-
+    @GetMapping(path = arrayOf("/groups/{query}"))
+    fun getCommunities(@PathVariable query: String) = service.findCommunitiesByQuery(query)
 }

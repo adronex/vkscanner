@@ -20,6 +20,14 @@
                         }
                     }
                 })
+                .state('posts', {
+                    url: '/posts',
+                    views: {
+                        'content': {
+                            template: '<post-list></post-list>'
+                        }
+                    }
+                })
                 .state('404', {
                     url: '/404',
                     views: {

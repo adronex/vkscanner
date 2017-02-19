@@ -12,10 +12,10 @@ import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
  */
 @RestController
 @RequestMapping("/filters")
-class FilterController @Inject constructor(val service: FilterService) {
+private class FilterController @Inject constructor(val service: FilterService) {
 
     @GetMapping
-    fun findAll() = service.findAll()
+    fun findAll() = service.findAllDtos()
 
     @GetMapping(path = arrayOf("/{id}"))
     fun findOne(@PathVariable id: String) = service.findOne(id)

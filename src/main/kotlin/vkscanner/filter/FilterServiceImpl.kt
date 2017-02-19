@@ -9,9 +9,11 @@ import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
  * @author Pavel
  */
 @Service
-internal class FilterServiceImpl @Inject constructor(val repository: FilterRepository) : FilterService {
+private class FilterServiceImpl @Inject constructor(val repository: FilterRepository) : FilterService {
 
-    override fun findAll() = repository.findAll().map { IdNameDto(it.id!!, it.name) }
+    override fun findAllDtos() = repository.findAll().map { IdNameDto(it.id!!, it.name) }
+
+    override fun findAll(): List<Filter> = repository.findAll()
 
     override fun findOne(id: String) = repository.findOne(id)
 

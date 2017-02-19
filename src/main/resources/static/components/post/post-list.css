@@ -1,0 +1,16 @@
+.post-list {
+    background-color: #c98904;
+}
+
+.post-item {
+    margin: 3%;
+    border: 2px solid #000000;
+    background-color: white;
+    -webkit-box-shadow: 6px 6px 0 -2px rgba(0, 0, 0, 0.8);
+    -moz-box-shadow: 6px 6px 0 -2px rgba(0, 0, 0, 0.8);
+    box-shadow: 6px 6px 0 -2px rgba(0, 0, 0, 0.8);
+}
+
+.post-item .post-text {
+    white-space: pre-line;
+}

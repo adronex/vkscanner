@@ -13,9 +13,6 @@
             $http.get('/filters').then(
                 function (response) {
                     ctrl.filters = response.data;
-                    if (ctrl.filters.length > 0) {
-                        setId(ctrl.filters.id);
-                    }
                 }
             );
         };

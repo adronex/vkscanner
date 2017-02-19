@@ -10,6 +10,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.web.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.scheduling.annotation.EnableScheduling
 
 /**
  * Created on 17.01.2017;
@@ -18,6 +19,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
  */
 
 @SpringBootApplication
+@EnableScheduling
 open class Application : SpringBootServletInitializer() {
 
     @Bean

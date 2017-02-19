@@ -1,10 +1,12 @@
 package vkscanner.vkexternal
 
+import com.vk.api.sdk.objects.groups.responses.SearchResponse
+
 /**
  * Default class description.
- * Created on 26.01.2017.
+ * Created on 19.02.2017.
  * @author Pavel
  */
 interface VkApiService {
-    fun getAllResponsesByAllFilters(): Set<OutputDto>
+    fun findCommunitiesByQuery(query: String): SearchResponse
 }
