@@ -8,7 +8,8 @@ import org.springframework.data.annotation.Id
  * Created on 26.01.2017.
  * @author Pavel
  */
-class Post(entry: WallpostFull = WallpostFull()) {
+class Post(entry: WallpostFull = WallpostFull(),
+           triggeredOn: String = "") {
     @Id val postId = entry.id
     val ownerId = entry.ownerId
     val text = entry.text
@@ -16,4 +17,5 @@ class Post(entry: WallpostFull = WallpostFull()) {
     val likes = entry.likes?.count
     val reposts = entry.reposts?.count
     val comments = entry.comments?.count
+    val triggeredOn = triggeredOn
 }

@@ -12,5 +12,6 @@
 }
 
 .post-item .post-text {
+    margin: 2%;
     white-space: pre-line;
 }

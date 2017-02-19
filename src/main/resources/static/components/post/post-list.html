@@ -3,9 +3,13 @@
          class="post-item">
         <div class="post-text">
             {{post.date * 1000 | date : format}}
+            Triggered on: {{post.triggeredOn}}
         </div>
         <div class="post-text">
             {{post.text}}
+        </div>
+        <div class="post-text">
+            Likes: {{post.likes}}, reposts: {{post.reposts}}, comments: {{post.comments}}
         </div>
     </div>
 </div>

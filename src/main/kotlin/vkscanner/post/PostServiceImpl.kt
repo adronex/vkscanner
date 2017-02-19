@@ -23,11 +23,14 @@ private class PostServiceImpl @Inject constructor(val repository: PostRepository
     override fun findAll(page: Int, limit: Int): Page<Post> =
             repository.findAllByOrderByDateDesc(PageRequest(page, limit))
 
+    data class QueriedSearchResponse(val searchResponse: SearchResponse,
+                                     val query: String)
+
     @Scheduled(cron = "0 0 0/2 1/1 * ?")
     private fun getAllResponsesByAllFilters() {
         val MAX_VK_RESPONSE_COUNT: Int = 100
         val filters = filterService.findAll()
-        val responses = java.util.ArrayList<SearchResponse>()
+        val responses = ArrayList<QueriedSearchResponse>()
         filters.forEach {
             val ownersOnly = it.ownersOnly
             it.queries.forEach {
@@ -37,14 +40,17 @@ private class PostServiceImpl @Inject constructor(val repository: PostRepository
                 while (currentOffset < totalCount) {
                     val singleResponse = getSingleResponse(paginationSize,
                             currentOffset, it, ownersOnly)
-                    responses.add(singleResponse)
+                    responses.add(QueriedSearchResponse(singleResponse, it))
                     totalCount = singleResponse.count
                     currentOffset += paginationSize
                 }
             }
         }
         // Transforming into this system format
-        val okValues = responses.flatMap { it.items }.map(::Post)
+        val okValues = responses.flatMap {
+            val triggeredOn = it.query
+            it.searchResponse.items.map { Post(it, triggeredOn) }
+        }
         // Filtering by text containing
         val finalEntry = LinkedHashSet<Post>()
         filters.flatMap { it.queries }.forEach {
