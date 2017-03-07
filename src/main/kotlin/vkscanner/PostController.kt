@@ -22,4 +22,9 @@ private class PostController @Inject constructor(val service: PostService) {
     fun findAll(@RequestParam(required = false, defaultValue = "0") page: Int,
                 @RequestParam(required = false, defaultValue = "15") limit: Int) =
             service.findAll(page, limit)
+
+    @GetMapping(path = arrayOf("/hopHop"))
+    fun buttonFeeder() {
+        service.buttonFeeder()
+    }
 }

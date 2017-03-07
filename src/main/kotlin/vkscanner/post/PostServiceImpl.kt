@@ -5,7 +5,6 @@ import com.vk.api.sdk.httpclient.HttpTransportClient
 import com.vk.api.sdk.objects.wall.responses.SearchResponse
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
-import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import vkscanner.filter.FilterService
 import java.util.*
@@ -27,8 +26,9 @@ private class PostServiceImpl @Inject constructor(val repository: PostRepository
     data class QueriedSearchResponse(val searchResponse: SearchResponse,
                                      val query: String)
 
-    @Scheduled(cron = "0 0 0/1 1/1 * ?")
-    private fun getAllResponsesByAllFilters() {
+    // @Scheduled(cron = "0 0 0/1 1/1 * ?")
+    // private fun getAllResponsesByAllFilters() {
+    override fun buttonFeeder() {
 
         val MAX_VK_RESPONSE_COUNT: Int = 100
         val QUERIES_PER_SECOND: Short = 3

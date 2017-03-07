@@ -9,4 +9,6 @@ import org.springframework.data.domain.Page
  */
 interface PostService {
     fun findAll(page: Int, limit: Int): Page<Post>
+
+    fun buttonFeeder()
 }
