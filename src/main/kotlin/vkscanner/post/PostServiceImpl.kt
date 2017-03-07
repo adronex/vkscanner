@@ -27,7 +27,7 @@ private class PostServiceImpl @Inject constructor(val repository: PostRepository
     data class QueriedSearchResponse(val searchResponse: SearchResponse,
                                      val query: String)
 
-    @Scheduled(cron = "0 0/47 * 1/1 * ?")
+    @Scheduled(cron = "0 0 0/1 1/1 * ?")
     private fun getAllResponsesByAllFilters() {
 
         val MAX_VK_RESPONSE_COUNT: Int = 100
