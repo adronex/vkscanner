@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import vkscanner.filter.FilterService
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
 
 /**
@@ -26,11 +27,14 @@ private class PostServiceImpl @Inject constructor(val repository: PostRepository
     data class QueriedSearchResponse(val searchResponse: SearchResponse,
                                      val query: String)
 
-    @Scheduled(cron = "0 0 0/2 1/1 * ?")
+    @Scheduled(cron = "0 0/47 * 1/1 * ?")
     private fun getAllResponsesByAllFilters() {
+
         val MAX_VK_RESPONSE_COUNT: Int = 100
+        val QUERIES_PER_SECOND: Short = 3
         val filters = filterService.findAll()
         val responses = ArrayList<QueriedSearchResponse>()
+
         filters.forEach {
             val ownersOnly = it.ownersOnly
             it.queries.forEach {
@@ -40,6 +44,7 @@ private class PostServiceImpl @Inject constructor(val repository: PostRepository
                 while (currentOffset < totalCount) {
                     val singleResponse = getSingleResponse(paginationSize,
                             currentOffset, it, ownersOnly)
+                    TimeUnit.MILLISECONDS.sleep(1000L / QUERIES_PER_SECOND)
                     responses.add(QueriedSearchResponse(singleResponse, it))
                     totalCount = singleResponse.count
                     currentOffset += paginationSize
@@ -80,6 +85,4 @@ private class PostServiceImpl @Inject constructor(val repository: PostRepository
                 .execute()
         return response
     }
-
-
 }
