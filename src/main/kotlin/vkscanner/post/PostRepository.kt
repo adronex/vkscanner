@@ -10,5 +10,5 @@ import org.springframework.data.mongodb.repository.MongoRepository
  * @author Pavel
  */
 interface PostRepository : MongoRepository<Post, String> {
-    fun findAllByOrderByDateDesc(pageable: Pageable): Page<Post>
+    fun findAllByOrderByPostedDesc(pageable: Pageable): Page<Post>
 }

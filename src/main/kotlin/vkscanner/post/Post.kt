@@ -2,6 +2,7 @@ package vkscanner.post
 
 import com.vk.api.sdk.objects.wall.WallpostFull
 import org.springframework.data.annotation.Id
+import java.util.*
 
 /**
  * Default class description.
@@ -9,13 +10,19 @@ import org.springframework.data.annotation.Id
  * @author Pavel
  */
 class Post(entry: WallpostFull = WallpostFull(),
-           triggeredOn: String = "") {
+           triggeredOnString: String) {
     @Id val postId = entry.id
     val ownerId = entry.ownerId
     val text = entry.text
-    val date = entry.date
+    val posted = entry.date
+    val scanned = Date()
     val likes = entry.likes?.count
     val reposts = entry.reposts?.count
     val comments = entry.comments?.count
-    val triggeredOn = triggeredOn
+    val triggeredOn = LinkedHashSet<String>()
+    val interesting = true
+
+    init {
+        this.triggeredOn.add(triggeredOnString)
+    }
 }

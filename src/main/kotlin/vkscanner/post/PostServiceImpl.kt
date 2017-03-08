@@ -21,7 +21,7 @@ private class PostServiceImpl @Inject constructor(val repository: PostRepository
                                                   val filterService: FilterService) : PostService {
 
     override fun findAll(page: Int, limit: Int): Page<Post> =
-            repository.findAllByOrderByDateDesc(PageRequest(page, limit))
+            repository.findAllByOrderByPostedDesc(PageRequest(page, limit))
 
     data class QueriedSearchResponse(val searchResponse: SearchResponse,
                                      val query: String)
@@ -45,27 +45,34 @@ private class PostServiceImpl @Inject constructor(val repository: PostRepository
                     val singleResponse = getSingleResponse(paginationSize,
                             currentOffset, it, ownersOnly)
                     TimeUnit.MILLISECONDS.sleep(1000L / QUERIES_PER_SECOND)
-                    responses.add(QueriedSearchResponse(singleResponse, it))
+                    if (singleResponse.count > 0) {
+                        responses.add(QueriedSearchResponse(singleResponse, it))
+                    }
                     totalCount = singleResponse.count
                     currentOffset += paginationSize
                 }
             }
         }
         // Transforming into this system format
-        val okValues = responses.flatMap {
+        val okValues = ArrayList<Post>()
+        responses.flatMap {
             val triggeredOn = it.query
-            it.searchResponse.items.map { Post(it, triggeredOn) }
+            it.searchResponse.items.map {
+                val postId = it.id
+                val post = okValues.find { it.postId == postId }
+                post?.triggeredOn?.add(triggeredOn) ?: Post(it, triggeredOn)
+            }
         }
         // Filtering by text containing
-        val finalEntry = LinkedHashSet<Post>()
+        val finalEntries = LinkedHashSet<Post>()
         filters.flatMap { it.queries }.forEach {
             query ->
             okValues.filter { it.text.toLowerCase().contains(query.toLowerCase()) }.forEach {
-                finalEntry.add(it)
+                finalEntries.add(it)
             }
         }
         // Saving to database
-        finalEntry.forEach {
+        finalEntries.forEach {
             repository.save(it)
         }
     }
