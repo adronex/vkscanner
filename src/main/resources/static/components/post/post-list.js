@@ -9,15 +9,27 @@
 
         ctrl.posts = [];
 
-        ctrl.load = function () {
-            $http.get('/posts').then(
+        ctrl.load = function (page) {
+            let url = page ? '/posts?page=' + page : '/posts';
+            $http.get(url).then(
                 function (response) {
                     ctrl.posts = response.data.content;
+                    ctrl.isLastPage = response.data.last;
+                    ctrl.isFirstPage = response.data.first;
+                    ctrl.currentPage = response.data.number;
                 }
             );
         };
 
         ctrl.load();
+        
+        ctrl.loadPreviousPage = function(){
+            ctrl.load(ctrl.currentPage - 1);
+        };
+        
+        ctrl.loadNextPage = function(){
+            ctrl.load(ctrl.currentPage + 1);
+        }
     }
 
     angular
