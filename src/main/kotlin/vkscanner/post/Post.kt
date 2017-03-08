@@ -10,7 +10,7 @@ import java.util.*
  * @author Pavel
  */
 class Post(entry: WallpostFull = WallpostFull(),
-           triggeredOnString: String) {
+           triggeredOnString: String = "") {
     @Id val postId = entry.id
     val ownerId = entry.ownerId
     val text = entry.text

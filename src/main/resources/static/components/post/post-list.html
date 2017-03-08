@@ -12,7 +12,8 @@
     <div data-ng-repeat="post in $ctrl.posts"
          class="post-item">
         <div class="post-text">
-            {{post.date * 1000 | date : format}}
+            Posted: {{post.posted * 1000 | date : format}}
+            Scanned: {{post.scanned | date : format}}
             Triggered on: {{post.triggeredOn}}
         </div>
         <div class="post-text">
