@@ -55,12 +55,18 @@ private class PostServiceImpl @Inject constructor(val repository: PostRepository
         }
         // Transforming into this system format
         val okValues = ArrayList<Post>()
-        responses.flatMap {
+        responses.forEach {
             val triggeredOn = it.query
-            it.searchResponse.items.map {
+            it.searchResponse.items.forEach {
                 val postId = it.id
                 val post = okValues.find { it.postId == postId }
-                post?.triggeredOn?.add(triggeredOn) ?: Post(it, triggeredOn)
+                if (post == null) {
+                    okValues.add(Post(it, triggeredOn))
+                } else {
+                    okValues.remove(post)
+                    post.triggeredOn.add(triggeredOn)
+                    okValues.add(post)
+                }
             }
         }
         // Filtering by text containing
