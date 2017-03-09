@@ -11,7 +11,8 @@ import java.util.*
  */
 class Post(entry: WallpostFull = WallpostFull(),
            triggeredOnString: String = "") {
-    @Id val postId = entry.id
+    @Id val id = UUID.randomUUID().toString()
+    val postId = entry.id
     val ownerId = entry.ownerId
     val text = entry.text
     val posted = entry.date
@@ -20,7 +21,7 @@ class Post(entry: WallpostFull = WallpostFull(),
     val reposts = entry.reposts?.count
     val comments = entry.comments?.count
     val triggeredOn = LinkedHashSet<String>()
-    val interesting = true
+    var interesting = true
 
     init {
         this.triggeredOn.add(triggeredOnString)

@@ -1,9 +1,6 @@
 package vkscanner
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import vkscanner.post.PostService
 import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
 
@@ -19,9 +16,16 @@ import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
 private class PostController @Inject constructor(val service: PostService) {
 
     @GetMapping
-    fun findAll(@RequestParam(required = false, defaultValue = "0") page: Int,
+    fun findAll(@RequestParam(required = false, defaultValue = "true") interestingOnly: Boolean,
+                @RequestParam(required = false, defaultValue = "0") page: Int,
                 @RequestParam(required = false, defaultValue = "15") limit: Int) =
-            service.findAll(page, limit)
+            service.findAll(interestingOnly, page, limit)
+
+    @PostMapping(path = arrayOf("/{postId}/setInteresting"))
+    fun findAll(@PathVariable postId: Int,
+                @RequestParam(required = false, defaultValue = "false") interesting: Boolean) {
+        service.setInteresting(postId, interesting)
+    }
 
     @GetMapping(path = arrayOf("/hopHop"))
     fun buttonFeeder() {

@@ -20,8 +20,18 @@ import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
 private class PostServiceImpl @Inject constructor(val repository: PostRepository,
                                                   val filterService: FilterService) : PostService {
 
-    override fun findAll(page: Int, limit: Int): Page<Post> =
-            repository.findAllByOrderByPostedDesc(PageRequest(page, limit))
+    override fun findAll(interestingOnly: Boolean, page: Int, limit: Int): Page<Post> {
+        if (!interestingOnly) {
+            return repository.findByOrderByPostedDesc(PageRequest(page, limit))
+        }
+        return repository.findByInterestingOrderByPostedDesc(interestingOnly, PageRequest(page, limit))
+    }
+
+    override fun setInteresting(postId: Int, interesting: Boolean) {
+        val post = repository.findByPostId(postId)
+        post.interesting = interesting
+        repository.save(post)
+    }
 
     data class QueriedSearchResponse(val searchResponse: SearchResponse,
                                      val query: String)

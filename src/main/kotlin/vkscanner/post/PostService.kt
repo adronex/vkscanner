@@ -8,7 +8,9 @@ import org.springframework.data.domain.Page
  * @author Pavel
  */
 interface PostService {
-    fun findAll(page: Int, limit: Int): Page<Post>
+    fun findAll(interestingOnly: Boolean, page: Int, limit: Int): Page<Post>
+
+    fun setInteresting(postId: Int, interesting: Boolean)
 
     fun buttonFeeder()
 }
