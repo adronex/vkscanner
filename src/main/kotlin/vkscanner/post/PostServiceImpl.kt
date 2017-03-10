@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import vkscanner.filter.FilterService
+import vkscanner.querycommunitycount.QueryCommunityCount
+import vkscanner.querycommunitycount.QueryCommunityCountService
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
@@ -18,7 +20,8 @@ import kotlin.reflect.jvm.internal.impl.javax.inject.Inject
  */
 @Service
 private class PostServiceImpl @Inject constructor(val repository: PostRepository,
-                                                  val filterService: FilterService) : PostService {
+                                                  val filterService: FilterService,
+                                                  val queryCommunityCountService: QueryCommunityCountService) : PostService {
 
     override fun findAll(interestingOnly: Boolean, page: Int, limit: Int): Page<Post> {
         if (!interestingOnly) {
@@ -40,41 +43,38 @@ private class PostServiceImpl @Inject constructor(val repository: PostRepository
     // private fun getAllResponsesByAllFilters() {
     override fun buttonFeeder() {
 
-        val MAX_VK_RESPONSE_COUNT: Int = 100
-        val QUERIES_PER_SECOND: Short = 3
         val filters = filterService.findAll()
         val responses = ArrayList<QueriedSearchResponse>()
 
-        filters.forEach {
-            val ownersOnly = it.ownersOnly
-            it.queries.forEach {
-                var currentOffset = 0
-                val paginationSize = MAX_VK_RESPONSE_COUNT
-                var totalCount = paginationSize // For first while prok
-                while (currentOffset < totalCount) {
-                    val singleResponse = getSingleResponse(paginationSize,
-                            currentOffset, it, ownersOnly)
-                    TimeUnit.MILLISECONDS.sleep(1000L / QUERIES_PER_SECOND)
-                    if (singleResponse.count > 0) {
-                        responses.add(QueriedSearchResponse(singleResponse, it))
-                    }
-                    totalCount = singleResponse.count
-                    currentOffset += paginationSize
+        filters.forEach { f ->
+            f.communities.forEach { communityId ->
+                // Collecting new posts since last check
+                val totalPosts = getTotalPosts(communityId)
+                val minQueryScannedCount = queryCommunityCountService.findByCommunityId(communityId)
+                        .groupBy { it.count }
+                        .keys
+                        .min()
+
+                val sinceLastCheck: Int =
+                        if (minQueryScannedCount != null) totalPosts - minQueryScannedCount else totalPosts
+
+                f.queries.forEach { query ->
+                    responses.addAll(shitOnPagination(query, communityId, f.ownersOnly))
+                    queryCommunityCountService.save(QueryCommunityCount(query, communityId, totalPosts))
                 }
             }
         }
         // Transforming into this system format
         val okValues = ArrayList<Post>()
-        responses.forEach {
-            val triggeredOn = it.query
-            it.searchResponse.items.forEach {
+        responses.forEach { (searchResponse, query) ->
+            searchResponse.items.forEach {
                 val postId = it.id
                 val post = okValues.find { it.postId == postId }
                 if (post == null) {
-                    okValues.add(Post(it, triggeredOn))
+                    okValues.add(Post(it, query))
                 } else {
                     okValues.remove(post)
-                    post.triggeredOn.add(triggeredOn)
+                    post.triggeredOn.add(query)
                     okValues.add(post)
                 }
             }
@@ -93,19 +93,52 @@ private class PostServiceImpl @Inject constructor(val repository: PostRepository
         }
     }
 
+    private fun shitOnPagination(query: String,
+                                 communityId: Int,
+                                 ownersOnly: Boolean): List<QueriedSearchResponse> {
+        // Defining constants
+        val MAX_VK_RESPONSE_COUNT: Int = 100
+        val QUERIES_PER_SECOND: Short = 3
+        // Defining init values
+        val responses = ArrayList<QueriedSearchResponse>()
+        var currentOffset = 0
+        val paginationSize = MAX_VK_RESPONSE_COUNT
+        var totalCount = paginationSize // For first while prok
+        // Doing all here
+        while (currentOffset < totalCount) {
+            val singleResponse = getSingleResponse(paginationSize,
+                    currentOffset, query, communityId, ownersOnly)
+            TimeUnit.MILLISECONDS.sleep(1000L / QUERIES_PER_SECOND)
+            if (singleResponse.count > 0) {
+                responses.add(QueriedSearchResponse(singleResponse, query))
+            }
+            totalCount = singleResponse.count
+            currentOffset += paginationSize
+        }
+        return responses
+    }
+
     private fun getSingleResponse(count: Int,
                                   offset: Int,
                                   query: String,
+                                  communityId: Int,
                                   ownersOnly: Boolean): SearchResponse {
         val transportClient = HttpTransportClient()
         val vk = VkApiClient(transportClient)
         val response = vk.wall().search()
                 .count(count)
                 .offset(offset)
-                .ownerId(-24983798)
+                .ownerId(communityId)
                 .ownersOnly(ownersOnly)
                 .query(query)
                 .execute()
         return response
+    }
+
+    private fun getTotalPosts(communityId: Int): Int {
+        val transportClient = HttpTransportClient()
+        val vk = VkApiClient(transportClient)
+        val response = vk.wall().get().count(1).ownerId(communityId).execute()
+        return response.count
     }
 }
